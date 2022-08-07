@@ -1,0 +1,36 @@
+<div class="container mt-3">
+    <div id="search-section">
+        <nz-input-group [nzSuffix]="suffixIconSearch">
+            <input nz-input placeholder="Search country" [(ngModel)]="searchValue" (ngModelChange)="onChange($event)"
+                (keyup.enter)="search()" (blur)="search()" />
+        </nz-input-group>
+        <ng-template #suffixIconSearch>
+            <i nz-icon nzType="search"></i>
+        </ng-template>
+    </div>
+
+    <div id="result" class="result__container">
+        <ul nz-list [nzDataSource]="displayData" nzBordered nzSize="large" [nzRenderItem]="largeItem"
+            [nzLoading]="loading">
+            <nz-skeleton [nzLoading]="loading" [nzActive]="true" [nzTitle]="{ width: 100 }" [nzParagraph]="{ rows: 1 }">
+                <ng-template #largeItem let-item>
+                    <li nz-list-item [nzActions]="[populationData]" [nzContent]="nameData">
+                        <ng-template #nameData>
+                            <div>
+                                <span class="item__name">{{ item.name.common }}</span>
+                                <div>{{ item.capital }} <span class="text-muted">, {{ item.subregion }}</span></div>
+                            </div>
+
+                        </ng-template>
+                    </li>
+                    <ng-template #populationData>
+                        <div class="text-end">
+                            <span class="text--small">Population</span>
+                            <div>{{ item.population | number }}</div>
+                        </div>
+                    </ng-template>
+                </ng-template>
+            </nz-skeleton>
+        </ul>
+    </div>
+</div>
